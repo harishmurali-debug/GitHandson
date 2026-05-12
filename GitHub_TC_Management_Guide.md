@@ -163,23 +163,43 @@ gh label create "Blocked"     --color "e4e669" --repo <username>/<repo>
 
 ## Step 6 — Create Issues (TC Execution Trackers)
 
-Create one issue per TC. The issue is the execution tracker — the actual TC content stays in the `.md` file.
+### Why both .md files and Issues?
+
+| | `.md` file | Issue |
+|---|---|---|
+| Purpose | Test case document | Execution tracker |
+| Contains | Steps, expected result | Pass/Fail status, comments |
+| Updated when | TC is added or changed | TC is executed |
+| Analogy | Test script | Test result sheet |
+
+The `.md` file is the **single source of truth** for TC content. The issue tracks **execution status only** — it links back to the `.md` file so there is no duplication.
+
+### Create issues with a direct link to the TC
 
 **Via gh CLI:**
 ```bash
 gh issue create \
   --repo <username>/<repo> \
   --title "TC_LOGIN_001 — Successful login with valid credentials" \
-  --body "Ref: TC_Login.md — TC_LOGIN_001" \
+  --body "**Test Case:** [TC_LOGIN_001 — Successful login with valid credentials](https://github.com/<username>/<repo>/blob/main/TC_Login.md#tc_login_001--successful-login-with-valid-credentials)" \
   --label "In Progress" \
   --milestone "Sprint 1"
 
 gh issue create \
   --repo <username>/<repo> \
   --title "TC_LOGIN_002 — Login with invalid password" \
-  --body "Ref: TC_Login.md — TC_LOGIN_002" \
+  --body "**Test Case:** [TC_LOGIN_002 — Login with invalid password](https://github.com/<username>/<repo>/blob/main/TC_Login.md#tc_login_002--login-with-invalid-password)" \
   --label "In Progress" \
   --milestone "Sprint 1"
+```
+
+> Opening the issue and clicking the link takes you directly to the full TC with steps and expected result in the `.md` file.
+
+### Update issue body with direct link (if already created)
+
+```bash
+gh issue edit <issue-number> --repo <username>/<repo> \
+  --body "**Test Case:** [TC_LOGIN_001 — Successful login with valid credentials](https://github.com/<username>/<repo>/blob/main/TC_Login.md#tc_login_001--successful-login-with-valid-credentials)"
 ```
 
 ---
@@ -193,10 +213,12 @@ The Project board is your test cycle execution view — visual Kanban showing st
 gh auth refresh -s project,read:project
 ```
 
-**Create the project:**
+**Create the project (one project for all sprints):**
 ```bash
-gh project create --owner <username> --title "Sprint 1 — Test Cycle"
+gh project create --owner <username> --title "KeeboHealth — QA Test Cycles"
 ```
+
+> Use one project board across all sprints. Filter by milestone on the board to see Sprint 1 or Sprint 2 separately. No need to create a new board every sprint.
 
 **Add issues to the board:**
 ```bash
