@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Cycle — Sprint 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f4f6f8;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .summary {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .summary-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 24px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      min-width: 80px;
+    }
+
+    .summary-card .count {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .summary-card .label {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .pass-count { color: #2e7d32; }
+    .fail-count { color: #c62828; }
+    .blocked-count { color: #f9a825; }
+    .inprogress-count { color: #1565c0; }
+    .total-count { color: #333; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    thead {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    thead th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    tbody tr:hover {
+      background: #eef2ff;
+    }
+
+    td {
+      padding: 12px 16px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-pass        { background: #e8f5e9; color: #2e7d32; }
+    .badge-fail        { background: #ffebee; color: #c62828; }
+    .badge-blocked     { background: #fffde7; color: #f9a825; }
+    .badge-inprogress  { background: #e3f2fd; color: #1565c0; }
+    .badge-todo        { background: #f5f5f5; color: #757575; }
+
+    select {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .priority-high   { color: #c62828; font-weight: bold; }
+    .priority-medium { color: #f9a825; font-weight: bold; }
+
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Test Cycle — Sprint 1</h1>
+  <div class="meta">
+    App: KeeboHealth Mobile &nbsp;|&nbsp;
+    Tester: Harish M &nbsp;|&nbsp;
+    Date: 2026-05-12 &nbsp;|&nbsp;
+    Milestone: Sprint 1
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary">
+    <div class="summary-card">
+      <div class="count total-count" id="total">2</div>
+      <div class="label">Total</div>
+    </div>
+    <div class="summary-card">
+      <div class="count pass-count" id="passCount">0</div>
+      <div class="label">Pass</div>
+    </div>
+    <div class="summary-card">
+      <div class="count fail-count" id="failCount">0</div>
+      <div class="label">Fail</div>
+    </div>
+    <div class="summary-card">
+      <div class="count blocked-count" id="blockedCount">0</div>
+      <div class="label">Blocked</div>
+    </div>
+    <div class="summary-card">
+      <div class="count inprogress-count" id="inprogressCount">2</div>
+      <div class="label">In Progress</div>
+    </div>
+  </div>
+
+  <!-- Test Cycle Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>TC ID</th>
+        <th>Title</th>
+        <th>Module</th>
+        <th>Priority</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="tcTable">
+
+      <tr>
+        <td>1</td>
+        <td><a href="https://github.com/harishmurali-debug/GitHandson/blob/main/TC_Login.md#tc_login_001--successful-login-with-valid-credentials" target="_blank">TC_LOGIN_001</a></td>
+        <td>Successful login with valid credentials</td>
+        <td>Login</td>
+        <td class="priority-high">High</td>
+        <td>Positive</td>
+        <td>
+          <select onchange="updateStatus(this)">
+            <option value="inprogress" selected>In Progress</option>
+            <option value="pass">Pass</option>
+            <option value="fail">Fail</option>
+            <option value="blocked">Blocked</option>
+            <option value="todo">To Do</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Add notes..." style="border:1px solid #ddd; padding:4px 8px; border-radius:4px; font-size:12px; width:160px;"/></td>
+      </tr>
+
+      <tr>
+        <td>2</td>
+        <td><a href="https://github.com/harishmurali-debug/GitHandson/blob/main/TC_Login.md#tc_login_002--login-with-invalid-password" target="_blank">TC_LOGIN_002</a></td>
+        <td>Login with invalid password</td>
+        <td>Login</td>
+        <td class="priority-high">High</td>
+        <td>Negative</td>
+        <td>
+          <select onchange="updateStatus(this)">
+            <option value="inprogress" selected>In Progress</option>
+            <option value="pass">Pass</option>
+            <option value="fail">Fail</option>
+            <option value="blocked">Blocked</option>
+            <option value="todo">To Do</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Add notes..." style="border:1px solid #ddd; padding:4px 8px; border-radius:4px; font-size:12px; width:160px;"/></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <footer>
+    KeeboHealth QA Team — Tricog Health &nbsp;|&nbsp;
+    TCs: <a href="https://github.com/harishmurali-debug/GitHandson" target="_blank">github.com/harishmurali-debug/GitHandson</a>
+  </footer>
+
+  <script>
+    function updateStatus(select) {
+      const value = select.value;
+      const badges = {
+        pass:        '<span class="badge badge-pass">Pass</span>',
+        fail:        '<span class="badge badge-fail">Fail</span>',
+        blocked:     '<span class="badge badge-blocked">Blocked</span>',
+        inprogress:  '<span class="badge badge-inprogress">In Progress</span>',
+        todo:        '<span class="badge badge-todo">To Do</span>'
+      };
+      const td = select.parentElement;
+      td.innerHTML = badges[value] + `
+        <select onchange="updateStatus(this)" style="margin-left:8px; padding:4px 8px; border-radius:6px; border:1px solid #ccc; font-size:12px; cursor:pointer;">
+          <option value="inprogress" ${value==='inprogress'?'selected':''}>In Progress</option>
+          <option value="pass"       ${value==='pass'?'selected':''}>Pass</option>
+          <option value="fail"       ${value==='fail'?'selected':''}>Fail</option>
+          <option value="blocked"    ${value==='blocked'?'selected':''}>Blocked</option>
+          <option value="todo"       ${value==='todo'?'selected':''}>To Do</option>
+        </select>`;
+      updateCounts();
+    }
+
+    function updateCounts() {
+      const selects = document.querySelectorAll('#tcTable select');
+      let pass = 0, fail = 0, blocked = 0, inprogress = 0, todo = 0;
+      selects.forEach(s => {
+        if (s.value === 'pass')        pass++;
+        else if (s.value === 'fail')   fail++;
+        else if (s.value === 'blocked') blocked++;
+        else if (s.value === 'inprogress') inprogress++;
+        else if (s.value === 'todo')   todo++;
+      });
+      document.getElementById('passCount').textContent = pass;
+      document.getElementById('failCount').textContent = fail;
+      document.getElementById('blockedCount').textContent = blocked;
+      document.getElementById('inprogressCount').textContent = inprogress;
+    }
+  </script>
+
+</body>
+</html>
